@@ -73,6 +73,11 @@ const RefreshToken =  user.generateRefreshToken()
 user.refreshToken = RefreshToken;
 await user.save()
 
-res.co
+res.cookie("RefreshToken",RefreshToken,{
+  httpOnly: true,
+  secure: true,         
+  sameSite: 'Strict',   
+  maxAge: 24 * 60 * 60 * 1000 // 1day
+}).json({AccessToken})
 
 }
