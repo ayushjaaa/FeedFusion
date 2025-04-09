@@ -56,12 +56,23 @@ export const loginUser = async (req,res) =>{
        return res.status(403).json({message:"roel is not allwoed"})
    
    }
-   const user = userModel.find({email})
+   const user = await userModel.findOne({ email }); 
+
    if(!user){
-    return res.status(400).json({message:"email is required"})
+    return res.status(400).json({message:"Invalid credentials"})
    }
-  const newuser = user.comaprepassword(password)
-  console.log(newuser)
-   
+   const isMatch = await user.comparePassword(password);
+  console.log(isMatch)
+  if(!isMatch){
+    return res.status(400).json({message:"Invalid credentials"})
+  }
+
+
+  const AccessToken =  user.generateAccessToken()
+const RefreshToken =  user.generateRefreshToken()
+user.refreshToken = RefreshToken;
+await user.save()
+
+res.co
 
 }
