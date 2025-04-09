@@ -70,7 +70,7 @@ export const loginUser = async (req,res) =>{
 
   const AccessToken =  user.generateAccessToken()
 const RefreshToken =  user.generateRefreshToken()
-user.refreshToken = RefreshToken;
+user.refreshToken.push(RefreshToken);
 await user.save()
 
 res.cookie("RefreshToken",RefreshToken,{

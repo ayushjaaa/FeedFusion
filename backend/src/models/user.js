@@ -38,8 +38,9 @@ role:{
 }
 ,
 refreshToken:{
-    type:String,
-    
+    type: [String],
+    default: [],
+
 }
 }, { timestamps: true });
 
