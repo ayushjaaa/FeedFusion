@@ -41,11 +41,11 @@ role:{
 export default mongoose.model("User", userSchema);
 
 
-userSchema.pre("save",async function (next) {
+userSchema.pre("save", async function (next) {
     if( !this.isModified("password")) return next()
-        this.password= await bcrypt.hash(this.password,10)
+        this.password = await bcrypt.hash(this.password,10)
     next( )
 })
-userSchema.method.comaprepassword = async function () {
+userSchema.method.comaprepassword = async function (password) {
     return bcrypt.compare(password,this.password)
 }

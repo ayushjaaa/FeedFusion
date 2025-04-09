@@ -1,12 +1,14 @@
 import express from 'express'
-import { registerUser } from "../controller/userRegister.controller.js"; 
-
-
+import * as userController from "../controller/userLogin.controller.js"
+import {body} from "express-validator"
+import  * as userMiddleware from '../../middlewares/user.middleware.js'
 const Registerroutes = express.Router()
 
-Registerroutes.post("/register",(req, res, next) => {
+Registerroutes.post("/register",
+ userMiddleware.registeruserValigation
+  ,(req, res, next) => {
     console.log("Incoming register POST hit!");
     next(); // Continue to actual handler
-  },registerUser)
+  },userController.loginUser)
 
 export default Registerroutes
