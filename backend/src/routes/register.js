@@ -12,3 +12,4 @@ Registerroutes.post("/register",
   },userController.registerUser)
 
 export default Registerroutes
+
