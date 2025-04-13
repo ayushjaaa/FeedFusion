@@ -14,10 +14,10 @@ const interestSchema = new mongoose.Schema({
   name: { type: String, required: true },
   subInterests: [subInterestSchema],
   createdby: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectI,
     ref: "User",
   },
-}, { timestamps: true });
+}, { timestamps: true  });
 
 // Create and export model
 const Interest = mongoose.model("Interest", interestSchema);
