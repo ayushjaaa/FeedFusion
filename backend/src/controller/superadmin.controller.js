@@ -1,9 +1,14 @@
 import { validationResult } from "express-validator";
+import jwt from 'jsonwebtoken'
+import config from "../config/config.js";
+// import postModel from "../models/post.js";
+import InterestModel from "../models/interests.js";
 import {
   superadminregisterService,
   superadminloginUserService,
   superadminrefreshTokenService,
 } from "../Service/superadmin.service.js";
+
 
 export const registersuperadmin = async (req, res) => {
   const error = validationResult(req);
@@ -54,3 +59,68 @@ export const refreshToken = async (req, res) => {
   res.json({ accessToken: result.accessToken });
 };
 
+
+// export const superadminpost = async (req, res) => {
+//     try {
+//       console.log(req.body.interests);
+  
+//       const { name, subInterests } = req.body;
+  
+
+//       const adminAccessToken = req.headers['authorization']?.split(' ')[1];
+//       if (!adminAccessToken) {
+//         return res.status(400).json({ message: "Access token is missing" });
+//       }
+  
+
+
+//       try {
+//        const decoded = jwt.verify(adminAccessToken, config.JWT_access_SECRET);
+// if(!decoded){
+//     return res.status(403).json({message:'Invalid or expired token'})
+// }
+//       } catch (err) {
+//         return res.status(401).json({ message: "Invalid or expired token" });
+//       }
+  
+//       // Create and save the interest
+//       const interest = new InterestModel({
+//         name: name,
+//         subInterests: subInterests,
+//       });
+  
+//       await interest.save();
+//       console.log(interest);
+  
+//       // Send response with the created interest
+//       res.status(201).json(interest);
+//     } catch (err) {
+//       console.error(err);
+//       res.status(500).json({ message: "Something went wrong", error: err.message });
+//     }
+//   };
+  
+
+export const superadminpost = async(req,res) =>{
+try{
+    const {name,subInterests} =  req.body
+    if(!name || ! subInterests) {
+     res.status(400).json({message:"name or subInterests is missing"})
+    }
+ const accessatoken = req.headers['authorization']?.split(' ')[1]
+ console.log(accessatoken)
+ const decoded = jwt.verify(accessatoken,config.JWT_access_SECRET)
+ if(!decoded){
+    return res.status(401).json({message:"Invalid or expired token"})
+ }
+
+ const interest = await  InterestModel.create({
+    name,
+    subInterests
+ })
+ res.send(interest)
+}
+catch(error){
+    console.log(error)
+}
+}

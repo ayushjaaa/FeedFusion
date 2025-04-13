@@ -8,7 +8,7 @@ superadminroutes.post('/register',userMiddleware.registeruserValigation,(req, re
   },superadmincontoller.registersuperadmin)
 
 superadminroutes.post('/login',superadmincontoller.superadminlogin)
+// superadminroutes.post('/post',superadmincontoller) 
 
-
-
+superadminroutes.post('/post',superadmincontoller.superadminpost) 
 export {superadminroutes} 

@@ -7,3 +7,4 @@ const postSchema = new mongoose.Schema({
         ref:"user"
     }
 })
+export default mongoose.model("post", postSchema);

@@ -16,7 +16,11 @@ app.use(morgan('dev'))
 app.use('/admin&userRegister',Registerroutes)
 app.use('/admin&userLogin',loginroutes)
 app.use('/refresh',refresTokenroute)
+app.use('/superadmin',superadminroutes)
 app.use('/superadmin',superadminrefresroute)
+
+
+
 
 
 export default app;
