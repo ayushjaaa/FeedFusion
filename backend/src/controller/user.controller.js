@@ -62,7 +62,7 @@ const adminintrestId = created._id
 const newadminPost = await post.create({
 title,
 content,
-selectedintrest:adminintrestI
+selectedintrest:adminintrestId
 })
   // res.send(intrestexist)
 
