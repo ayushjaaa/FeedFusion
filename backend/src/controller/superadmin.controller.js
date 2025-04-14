@@ -112,7 +112,7 @@ try{
  console.log(accessatoken)
  const decoded = await jwt.verify(accessatoken,config.JWT_access_SECRET)
  if(!decoded){
-    return res.status(401).json({message:"Invalid or expired token"})
+    return res.status(401).json({message:"Invalid or expired toke"})
  }
 
  const interest = await  InterestModel.create({
