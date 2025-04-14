@@ -104,12 +104,13 @@ export const refreshToken = async (req, res) => {
 export const superadminpost = async(req,res) =>{
 try{
     const {name,subInterests} =  req.body
+    console.log(req.body)
     if(!name || ! subInterests) {
      res.status(400).json({message:"name or subInterests is missing"})
     }
  const accessatoken = req.headers['authorization']?.split(' ')[1]
  console.log(accessatoken)
- const decoded = jwt.verify(accessatoken,config.JWT_access_SECRET)
+ const decoded = await jwt.verify(accessatoken,config.JWT_access_SECRET)
  if(!decoded){
     return res.status(401).json({message:"Invalid or expired token"})
  }

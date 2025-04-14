@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 
 const subInterestSchema = new mongoose.Schema({
   name: { type: String, required: true },
-//   subInterests: [{type: mongoose.Schema.Types.ObjectId}]
+  subInterests: [{type: mongoose.Schema.Types.ObjectId}]
 });
 
 

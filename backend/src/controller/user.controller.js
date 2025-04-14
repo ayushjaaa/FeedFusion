@@ -6,6 +6,8 @@ import {
 } from "../Service/user.service.js";
 import InterestModel from "../models/interests.js";
 import jwt from 'jsonwebtoken'
+import adminintrest from "../models/adminintrest.js";
+import post from "../models/post.js";
 
 export const registerUser = async (req, res) => {
   const error = validationResult(req);
@@ -46,12 +48,24 @@ export const loginUser = async (req, res) => {
 
 
 export const adminpostpostcontroller = async(req,res)=>{
-  const data = req.body.intrest
-  console.log(data)
-const intrestexist = await InterestModel.find({})
-console.log(intrestexist)
-console.log(data)
-  res.send(intrestexist)
+  const {intrest,content,title} = req.body
+//   console.log(data)
+// const intrestexist = await InterestModel.find({})
+// // console.log(intrestexist)
+// console.log(data)
+
+const created = await adminintrest.create({
+  adminintrest:intrest
+})
+const adminintrestId = created._id
+
+const newadminPost = await post.create({
+title,
+content,
+selectedintrest:adminintrestI
+})
+  // res.send(intrestexist)
+
 }
 
 export const adminpostController = async(req,res) =>{
@@ -62,9 +76,9 @@ return  res.status(401).json({message:'invaild or expired access token'})
 }
   const intrest = await InterestModel.find({}).lean()
 res.send(intrest)
-console.log(intrest)
+// console.log(intrest)/
 }catch(error){
-  console.log(error)
+  // console.log(error)
 }
 }
 
