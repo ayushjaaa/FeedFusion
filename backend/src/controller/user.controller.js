@@ -4,6 +4,8 @@ import {
   loginUserService,
   refreshTokenService,
 } from "../Service/user.service.js";
+import InterestModel from "../models/interests.js";
+import jwt from 'jsonwebtoken'
 
 export const registerUser = async (req, res) => {
   const error = validationResult(req);
@@ -41,6 +43,32 @@ export const loginUser = async (req, res) => {
   }
 };
 
+
+
+export const adminpostpostcontroller = async(req,res)=>{
+  const data = req.body.intrest
+  console.log(data)
+const intrestexist = await InterestModel.find({})
+console.log(intrestexist)
+console.log(data)
+  res.send(intrestexist)
+}
+
+export const adminpostController = async(req,res) =>{
+try{
+  const accessatoken = req.headers['authorization']?.split(' ')[1]
+if(!accessatoken){
+return  res.status(401).json({message:'invaild or expired access token'})
+}
+  const intrest = await InterestModel.find({}).lean()
+res.send(intrest)
+console.log(intrest)
+}catch(error){
+  console.log(error)
+}
+}
+
+
 export const refreshToken = async (req, res) => {
   const token = req.cookies.RefreshToken;
   const result = await refreshTokenService(token);
@@ -51,3 +79,5 @@ export const refreshToken = async (req, res) => {
 
   res.json({ accessToken: result.accessToken });
 };
+
+

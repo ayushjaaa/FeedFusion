@@ -6,6 +6,7 @@ import { superadminroutes } from "./routes/superadmin.js";
 import superadminrefresroute from './routes/superadminrefreshtoken.js'
 import loginroutes from "./routes/loginroute.js";
 import refresTokenroute from "./routes/accesstoken.js";
+import adminrouest from "./routes/adminroute.js";
 
 const app = express()
 
@@ -15,6 +16,9 @@ app.use(express.urlencoded({extended:true}))
 app.use(morgan('dev'))
 app.use('/admin&userRegister',Registerroutes)
 app.use('/admin&userLogin',loginroutes)
+
+app.use('/admin',adminrouest)
+
 app.use('/refresh',refresTokenroute)
 app.use('/superadmin',superadminroutes)
 app.use('/superadmin',superadminrefresroute)

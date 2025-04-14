@@ -6,5 +6,6 @@ const postSchema = new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:"user"
     }
+    ,selectedintrest:[{type:mongoose.Schema.ObjectId,ref:'Interest'}]
 })
 export default mongoose.model("post", postSchema);
