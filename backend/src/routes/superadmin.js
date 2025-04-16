@@ -11,4 +11,5 @@ superadminroutes.post('/login',superadmincontoller.superadminlogin)
 // superadminroutes.post('/post',superadmincontoller) 
 
 superadminroutes.post('/post',superadmincontoller.superadminpost) 
+
 export {superadminroutes} 

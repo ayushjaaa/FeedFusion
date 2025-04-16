@@ -49,7 +49,7 @@ export const loginUser = async (req, res) => {
 
 export const adminpostpostcontroller = async(req,res)=>{
   const {intrest,content,title} = req.body
-//   console.log(data)
+  // console.log(data)
 // const intrestexist = await InterestModel.find({})
 // // console.log(intrestexist)
 // console.log(data)
@@ -64,8 +64,10 @@ title,
 content,
 selectedintrest:adminintrestId
 })
-  // res.send(intrestexist)
+const populatedPost = await newadminPost.populate('selectedintrest');  // Populate the selectedintrest field
 
+console.log(populatedPost)
+  res.status(200).json({message:"post created by admin",populatedPost})
 }
 
 export const adminpostController = async(req,res) =>{
@@ -76,7 +78,7 @@ return  res.status(401).json({message:'invaild or expired access token'})
 }
   const intrest = await InterestModel.find({}).lean()
 res.send(intrest)
-// console.log(intrest)/
+// console.log(intrest)
 }catch(error){
   // console.log(error)
 }
@@ -95,3 +97,16 @@ export const refreshToken = async (req, res) => {
 };
 
 
+
+export const intrestPost = async(req,res) =>{
+const {intrest}  = req.body
+if(!intrest){
+  return res.status(400).json({message:"intrest is required"})
+}
+// const data = await post.find({title :'titel'})
+// console.log(data)
+
+ const data =    intrest.map((elem)=>  post.find({elem}).populate())
+console.log(data)
+// console.log(intrest)
+}

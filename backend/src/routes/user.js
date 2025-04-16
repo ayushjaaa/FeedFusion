@@ -13,6 +13,7 @@ const Registerroutes = express.Router()
   },userController.registerUser)
 
 
-
+Registerroutes.post('/intrestpost',userController.intrestPost)
 export {Registerroutes}
+
 
