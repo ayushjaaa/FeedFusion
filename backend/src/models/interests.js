@@ -15,7 +15,7 @@ const interestSchema = new mongoose.Schema({
   subInterests: [subInterestSchema],
   createdby: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
+    ref: "User ",
   },
 }, { timestamps: true  });
 
