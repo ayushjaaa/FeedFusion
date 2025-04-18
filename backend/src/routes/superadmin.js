@@ -1,5 +1,5 @@
 import express from 'express'
-import  * as userMiddleware from '../middlewares/adminmidelware.js'
+import  * as userMiddleware from '../../middlewares/adminmidelware.js'
 import * as superadmincontoller from "../controller/superadmin.controller.js"
 const superadminroutes = express.Router()
 superadminroutes.post('/register',userMiddleware.registeruserValigation,(req, res, next) => {
@@ -8,8 +8,6 @@ superadminroutes.post('/register',userMiddleware.registeruserValigation,(req, re
   },superadmincontoller.registersuperadmin)
 
 superadminroutes.post('/login',superadmincontoller.superadminlogin)
-// superadminroutes.post('/post',superadmincontoller) 
 
-superadminroutes.post('/post',superadmincontoller.superadminpost) 
 
 export {superadminroutes} 
