@@ -6,7 +6,7 @@ try{
     if(!accesstoken){
         return res.status(400).json({message:"accesstoke is required"})
     }
-    const decod = jwt.verify(accesstoken,config.JWT_access_SECRET)
+    const decod = jwt.verify(accesstoken,config.JWT_access_SECRET )
    
      req.user = decod
     console.log(req.user)
