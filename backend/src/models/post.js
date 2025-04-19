@@ -1,15 +1,3 @@
-// import mongoose  from "mongoose";
-// const postSchema = new mongoose.Schema({
-//     title:String,
-//     content:String,
-//     createdby:{
-//         type:mongoose.Schema.Types.ObjectId,
-//         ref:"user"
-//     }
-//     ,selectedintrest:{type:mongoose.Schema.Types.ObjectId, ref:"adminintrest"}
-// })
-// export default mongoose.model("post", postSchema);
-
 
 
 
@@ -45,24 +33,6 @@ const postSchema = new mongoose.Schema({
 
 module.exports = mongoose.model("Post", postSchema);
 
-
-
-
-
-// {
-//     "title": "Best UI Libraries 2025",
-//     "content": "Tailwind, Chakra UI, Material UI",
-//     "interests": [
-//       {
-//         "interestId": "660aa111",          // Design
-//         "subInterestIds": ["660bb224", "660bb225"]  // UI, UX
-//       },
-//       {
-//         "interestId": "660aa112",          // Frontend
-//         "subInterestIds": ["660bb226"]     // React
-//       }
-//     ]
-//   }
 
 
 

@@ -1,13 +1,14 @@
-import { validationResult } from "express-validator";
+import { header, validationResult } from "express-validator";
 import jwt from 'jsonwebtoken'
 import config from "../config/config.js";
-
-
+import InterestModel from "../models/interest.js";
+import userModel from "../models/user.js";
 import {
   superadminregisterService,
   superadminloginUserService,
   superadminrefreshTokenService,
 } from "../serves/superadmin.service.js";
+import e from "express";
 
 
 export const registersuperadmin = async (req, res) => {
@@ -58,4 +59,68 @@ export const refreshToken = async (req, res) => {
 
   res.json({ accessToken: result.accessToken });
 };
+
+
+export const postIntrest = async (req,res) =>{
+try{
+    const {data} = req.body
+    if(!data){
+        res.status(400).json({message:"data is missing"})
+    }
+    const refreshtoken = req.headers.authorization?.split(" ")[1]
+const decoded = await jwt.verify(refreshtoken,config.JWT_access_SECRET)
+if(!decoded){
+    return res.status(400).json({message:"refresh token expired or Invalid"})
+}
+console.log(decoded._id)
+
+const createInterestRecursively = async (data,parent = null ) =>{
+    const newintrest = await InterestModel.create({
+        name:data.name,
+        parentId:parent,
+        createdby:decoded._id
+    })
+    if(data.children && data.children.length > 0 ){
+        for (const child of data.children) {
+           await createInterestRecursively(child,newintrest._id)
+            // console.log(newintrest)
+        }
+
+    }
+
+}
+await createInterestRecursively(data); 
+return res.status(201).json({message:"Intrest created successfully"})
+}
+catch(error){
+    console.log(error)
+    res.status(500).json({message:"Internal Server Error"})
+}
+}
+
+export const alladmin = async(req,res) =>{
+ try{
+    const alladmin = await userModel.find({role:"admin"})
+    if(!alladmin){
+       return res.status(400).json({message:"no admin is there"})
+    }
+    return res.status(200).json({message:"adminlist",data:alladmin})
+ }catch(err){
+    console.log(err)
+    res.status(500).json({message:"internal server error",err})
+ }
+}
+
+export const alluser = async(req,res) =>{
+   try{
+    const alladmin = await userModel.find({role:"user"})
+    if (alladmin.length === 0) {
+        return res.status(404).json({ message: "No admin found" });
+      }
+      
+    return res.status(200).json({message:"adminlist",data:alladmin})
+}catch(error){
+    return res.status(500).json({message:"intrenal server error "})
+}
+   }
 

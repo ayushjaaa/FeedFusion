@@ -1,6 +1,7 @@
 import express from 'express'
 import  * as userMiddleware from '../../middlewares/adminmidelware.js'
 import * as superadmincontoller from "../controller/superadmin.controller.js"
+import { authmidelware } from '../../middlewares/authmidelware.js'
 const superadminroutes = express.Router()
 superadminroutes.post('/register',userMiddleware.registeruserValigation,(req, res, next) => {
     console.log("Incoming register POST hit!");
@@ -9,5 +10,7 @@ superadminroutes.post('/register',userMiddleware.registeruserValigation,(req, re
 
 superadminroutes.post('/login',superadmincontoller.superadminlogin)
 
-
+superadminroutes.post('/intrest',superadmincontoller.postIntrest)
+superadminroutes.post('/alladmin',superadmincontoller.alladmin)
+superadminroutes.post('/alluser',authmidelware,superadmincontoller.alluser)
 export {superadminroutes} 

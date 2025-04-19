@@ -21,6 +21,8 @@ app.use('/superadmin',superadminrefresroute) // superadmin refresh
 
 
 
+// user //
+app.use('/user',Userroutes)
 
 
 export default app;

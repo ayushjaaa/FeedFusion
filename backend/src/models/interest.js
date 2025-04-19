@@ -5,7 +5,7 @@ const interestSchema = new mongoose.Schema({
     },
     parentId:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:""
+        ref:"Interest"
     },
     createdby: {
         type:mongoose.Schema.Types.ObjectId,
