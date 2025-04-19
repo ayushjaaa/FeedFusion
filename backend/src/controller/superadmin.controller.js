@@ -113,7 +113,7 @@ export const alladmin = async(req,res) =>{
 
 export const alluser = async(req,res) =>{
    try{
-    const alluser = await userModel.find({role:"user"})
+    const alluser = await userModel.find({role:"uer"})
     if (alluser.length === 0) {
         return res.status(404).json({ message: "No admin found" });
       }
@@ -124,3 +124,19 @@ export const alluser = async(req,res) =>{
 }
    }
 
+
+export const deletadmin = async(req,res) =>{
+try{
+    const newuser = req.params.id
+console.log(newuser)
+if(!newuser){
+    return res.status(400).json({message:'id is required'})
+}
+ const user = await userModel.findOneAndDelete({_id:newuser})
+ return res.status(404).json({message:'user not found'})
+  
+}catch(error){
+    console.log(error)
+    res.status(500).json({message:'error in the deletadmin',error})
+}
+}

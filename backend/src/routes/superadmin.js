@@ -13,4 +13,7 @@ superadminroutes.post('/login',superadmincontoller.superadminlogin)
 superadminroutes.post('/intrest',superadmincontoller.postIntrest)
 superadminroutes.post('/alladmin',authmidelware,superadmincontoller.alladmin)
 superadminroutes.post('/alluser',authmidelware,superadmincontoller.alluser)
+superadminroutes.post('/deleteadmin/:id',authmidelware,superadmincontoller.deletadmin) // send id in the params mtlb jub admin display kar rhe ho to to side mai ek delet ka button ho ga wo uski id params mai send ho gi phir delet ho jae ge 
+superadminroutes.post('/deleteuser/:id',authmidelware,superadmincontoller.deletadmin) // send id in the params mtlb jub user display kar rhe ho to to side mai ek delet ka button ho ga wo uski id params mai send ho gi phir delet ho jae ge 
+
 export {superadminroutes} 
