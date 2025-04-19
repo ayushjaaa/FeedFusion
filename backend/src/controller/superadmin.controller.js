@@ -113,12 +113,12 @@ export const alladmin = async(req,res) =>{
 
 export const alluser = async(req,res) =>{
    try{
-    const alladmin = await userModel.find({role:"user"})
-    if (alladmin.length === 0) {
+    const alluser = await userModel.find({role:"user"})
+    if (alluser.length === 0) {
         return res.status(404).json({ message: "No admin found" });
       }
       
-    return res.status(200).json({message:"adminlist",data:alladmin})
+    return res.status(200).json({message:"adminlist",data:alluser})
 }catch(error){
     return res.status(500).json({message:"intrenal server error "})
 }

@@ -11,6 +11,6 @@ superadminroutes.post('/register',userMiddleware.registeruserValigation,(req, re
 superadminroutes.post('/login',superadmincontoller.superadminlogin)
 
 superadminroutes.post('/intrest',superadmincontoller.postIntrest)
-superadminroutes.post('/alladmin',superadmincontoller.alladmin)
+superadminroutes.post('/alladmin',authmidelware,superadmincontoller.alladmin)
 superadminroutes.post('/alluser',authmidelware,superadmincontoller.alluser)
 export {superadminroutes} 
