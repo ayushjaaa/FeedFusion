@@ -13,7 +13,7 @@ export const registerUserService = async ({ username, email, password, role }) =
 
   const existingUser = await userModel.findOne({ email });
   if (existingUser) {
-    return { status: 400, message: "User already exists" };
+    return { status: 400, message: "User already exists"  };
   }
 
   const newUser = await userModel.create({
