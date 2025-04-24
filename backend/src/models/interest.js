@@ -10,7 +10,8 @@ const interestSchema = new mongoose.Schema({
     createdby: {
         type:mongoose.Schema.Types.ObjectId,
         ref:"User"
-    }
+    },
+    
 },{timestamps:true})
 const Interest = mongoose.model("Interest",interestSchema)
 export default Interest

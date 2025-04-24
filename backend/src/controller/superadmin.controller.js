@@ -8,7 +8,7 @@ import {
   superadminloginUserService,
   superadminrefreshTokenService,
 } from "../serves/superadmin.service.js";
-import e from "express";
+import postModel from "../models/post.js";
 
 
 export const registersuperadmin = async (req, res) => {
@@ -98,6 +98,19 @@ catch(error){
 }
 }
 
+export const allpost = async(req,res) =>{
+try{
+    const post = await postModel.find({})
+console.log(post)
+if(!post){
+    return res.status(403).json({message:'no post'})
+}
+}catch(error){
+    console.log(error)
+    return res.status(500).json({message:'intreanl server error'})
+}
+}
+
 export const alladmin = async(req,res) =>{
  try{
     const alladmin = await userModel.find({role:"admin"})
@@ -140,3 +153,4 @@ if(!newuser){
     res.status(500).json({message:'error in the deletadmin',error})
 }
 }
+

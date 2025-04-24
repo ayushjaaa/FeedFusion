@@ -2,6 +2,7 @@ import express from "express";
 import * as userController from "../controller/user.controller.js";
 import { body } from "express-validator";
 import * as userMiddleware from "../../middlewares/user.middleware.js";
+import { authmidelware } from "../../middlewares/authmidelware.js";
 
 const Userroutes = express.Router();
 
@@ -27,6 +28,11 @@ Userroutes.post('/login',
   },userController.loginUser)
 
 
+
+Userroutes.post('/intrestpost',authmidelware,userController.intrestpost)
+Userroutes.post('/lick/:id',authmidelware,userController.likepost)
+Userroutes.post('/save/:id',authmidelware,userController.save)
+Userroutes.get('/tranding',authmidelware,userController.tranding)
 export { Userroutes };
 
 // 

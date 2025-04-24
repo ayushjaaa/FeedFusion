@@ -6,6 +6,7 @@ import { superadminroutes } from "./routes/superadmin.js";
 import superadminrefresroute from './routes/superadminrefreshtoken.js'
 
 import refresTokenroute from "./routes/accesstoken.js";
+import { adminRoutes } from "./routes/admin.js";
 
 
 const app = express()
@@ -23,6 +24,6 @@ app.use('/superadmin',superadminrefresroute) // superadmin refresh
 
 // user //
 app.use('/user',Userroutes)
-
+app.use("/admin",adminRoutes)
 
 export default app;

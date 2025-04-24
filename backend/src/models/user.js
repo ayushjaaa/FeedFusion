@@ -33,7 +33,13 @@ const userSchema = new mongoose.Schema({
   refreshToken: {
     type: [String],
     default: []
-  }
+  },
+  selectedInterests: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Interest"
+    }
+  ]
   
 }, { timestamps: true });
 

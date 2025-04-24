@@ -2,6 +2,7 @@ import config from "../config/config.js";
 import userModel from "../models/user.js";
 import jwt from "jsonwebtoken";
 const ALLOWED_ROLES = ["superadmin"];
+
 export const superadminregisterService = async ({ username, email, password, role }) => {
     const normalizedRole = role.toLowerCase();
   
