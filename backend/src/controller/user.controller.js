@@ -9,10 +9,14 @@ import PostModel from "../models/post.js";
 import userModel from "../models/user.js";
 import likeModel from '../models/like.js'
 export const registerUser = async (req, res) => {
-  console.log('register')
+
+  // console.log(req.body)
+  // console.log('register')
   const error = validationResult(req);
+
   if (!error.isEmpty()) {
     return res.status(400).json({ error: error.array() });
+    console.log("error")
   }
 
   try {

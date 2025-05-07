@@ -5,9 +5,11 @@ import config from "../config/config.js";
 const ALLOWED_ROLES = ["user", "admin"];
 
 export const registerUserService = async ({ username, email, password, role }) => {
+  // console.log(username,email,password,role)
   const normalizedRole = role.toLowerCase();
 
   if (!ALLOWED_ROLES.includes(normalizedRole)) {
+    console.log('yes')
     return { status: 403, message: "Role not allowed directly" };
   }
 
