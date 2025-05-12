@@ -6,5 +6,5 @@ connetedtodb()
 const server = http.createServer(app)
 const PORT = config.PORT;
 server.listen(PORT,()=>{
-    console.log(`Server is running on the port ${PORT}`)
+    console.log(`Server is running on the port    ${PORT}`)
 })
