@@ -44,6 +44,7 @@ export const loginUserService = async ({ email, password, role }) => {
   }
 
   const user = await userModel.findOne({ email });
+
   if (!user) return { status: 400, message: "Invalid credentials" };
 
   const isMatch = await user.comparePassword(password);
@@ -55,7 +56,7 @@ export const loginUserService = async ({ email, password, role }) => {
   user.refreshToken.push(refreshToken);
   await user.save();
 
-  return { status: 200, accessToken, refreshToken };
+  return { status: 200, accessToken, refreshToken,role:user.role};
 };
 
 export const refreshTokenService = async (token) => {
