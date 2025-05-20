@@ -36,12 +36,15 @@ export const superadminregisterService = async ({ username, email, password, rol
 
   export const superadminloginUserService = async ({ email, password, role }) => {
     const normalizedRole = role.toLowerCase();
-  
+
     if (!ALLOWED_ROLES.includes(normalizedRole)) {
       return { status: 403, message: "Role is not allowed" };
     }
   
     const user = await userModel.findOne({ email });
+    console.log(user)
+     const username = user.username
+  const image = user.image
     if (!user) return { status: 400, message: "Invalid credentials" };
   
     const isMatch = await user.comparePassword(password);
@@ -53,7 +56,7 @@ export const superadminregisterService = async ({ username, email, password, rol
     user.refreshToken.push(refreshToken);
     await user.save();
   
-    return { status: 200, accessToken, refreshToken };
+    return { status: 200, accessToken, refreshToken,username,image,role:user.role};
   };
   
   export const superadminrefreshTokenService = async (token) => {

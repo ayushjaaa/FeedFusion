@@ -25,6 +25,10 @@ const userSchema = new mongoose.Schema({
     required: true,
     minLength: 6
   },
+  image: {
+    type: String,
+    default: "https://images.unsplash.com/photo-1726065235203-4368c41c6f19?q=80&w=3087&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  },
   role: {
     type: String,
     enum: ['user', 'admin', 'superadmin'],

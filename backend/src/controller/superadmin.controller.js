@@ -12,12 +12,13 @@ import postModel from "../models/post.js";
 
 
 export const registersuperadmin = async (req, res) => {
-  const error = validationResult(req);
+  const error = validationResult(req.body);
   if (!error.isEmpty()) {
     return res.status(400).json({ error: error.array() });
   }
 
   try {
+    console.log(req.body)
     const result = await superadminregisterService(req.body);
     return res.status(result.status).json(result);
   } catch (err) {
@@ -28,7 +29,10 @@ export const registersuperadmin = async (req, res) => {
 
 export const superadminlogin = async (req, res) => {
   try {
+    // console.log(req.body)
     const result = await superadminloginUserService(req.body);
+
+    console.log(result)
 
     if (result.status !== 200) {
       return res.status(result.status).json({ message: result.message });
@@ -39,7 +43,7 @@ export const superadminlogin = async (req, res) => {
       secure: process.env.NODE_ENV === "production",
       sameSite: "Strict",
       maxAge: 24 * 60 * 60 * 1000,
-    }).json({ accessToken: result.accessToken });
+    }).json({ accessToken: result.accessToken,username:result.username,image:result.image,role:result.role});
 
   } catch (err) {
     console.error("Login Error:", err);
