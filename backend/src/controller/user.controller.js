@@ -41,7 +41,7 @@ export const loginUser = async (req, res) => {
       secure: process.env.NODE_ENV === "production",
       sameSite: "Strict",
       maxAge: 24 * 60 * 60 * 1000,
-    }).json({ accessToken: result.accessToken ,role:result.role});
+    }).json({ accessToken: result.accessToken ,role:result.role,username:result.username,image:result.image});
 
   } catch (err) {
     console.error("Login Error:", err);
@@ -59,6 +59,13 @@ export const refreshToken = async (req, res) => {
 
   res.json({ accessToken: result.accessToken });
 };
+
+export const details = async(req,res)=>{
+  console.log(req.user)
+  const {email,role,username} = req.user
+const user = await userModel.findOne({email,role,username}).select("-password -refreshToken -__v -createdAt -updatedAt")
+res.status(200).json({message:"user details",user})
+}
 
 
 export const posttcreat = async(req,res)=>{

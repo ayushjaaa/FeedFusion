@@ -31,8 +31,15 @@ const postSchema = new mongoose.Schema({
   likeCount:{
     type:Number,
     default:0,
-  }
-
+  },
+  svaecount:{
+    type:Number,
+    default:0,
+  },
+createdAt: {
+  type: Date,          // ISODate jaisa date field
+  default: Date.now    // agar value na de to current time set ho jayega
+}
 });
 
 const Post = mongoose.model("Post", postSchema);

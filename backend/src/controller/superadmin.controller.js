@@ -33,7 +33,7 @@ export const superadminlogin = async (req, res) => {
     const result = await superadminloginUserService(req.body);
 
     console.log(result)
-
+    
     if (result.status !== 200) {
       return res.status(result.status).json({ message: result.message });
     }
@@ -43,7 +43,7 @@ export const superadminlogin = async (req, res) => {
       secure: process.env.NODE_ENV === "production",
       sameSite: "Strict",
       maxAge: 24 * 60 * 60 * 1000,
-    }).json({ accessToken: result.accessToken,username:result.username,image:result.image,role:result.role});
+    }).json({ accessToken: result.accessToken });
 
   } catch (err) {
     console.error("Login Error:", err);
@@ -106,6 +106,7 @@ export const allpost = async(req,res) =>{
 try{
     const post = await postModel.find({})
 console.log(post)
+
 if(!post){
     return res.status(403).json({message:'no post'})
 }

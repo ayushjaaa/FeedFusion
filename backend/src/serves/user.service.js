@@ -56,7 +56,7 @@ export const loginUserService = async ({ email, password, role }) => {
   user.refreshToken.push(refreshToken);
   await user.save();
 
-  return { status: 200, accessToken, refreshToken,role:user.role};
+  return { status: 200, accessToken, refreshToken,role:user.role,username:user.username,image:user.image};
 };
 
 export const refreshTokenService = async (token) => {

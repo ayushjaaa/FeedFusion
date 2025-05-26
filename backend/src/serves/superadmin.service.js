@@ -42,9 +42,7 @@ export const superadminregisterService = async ({ username, email, password, rol
     }
   
     const user = await userModel.findOne({ email });
-    console.log(user)
-     const username = user.username
-  const image = user.image
+
     if (!user) return { status: 400, message: "Invalid credentials" };
   
     const isMatch = await user.comparePassword(password);
@@ -56,7 +54,7 @@ export const superadminregisterService = async ({ username, email, password, rol
     user.refreshToken.push(refreshToken);
     await user.save();
   
-    return { status: 200, accessToken, refreshToken,username,image,role:user.role};
+    return { status: 200, accessToken, refreshToken};
   };
   
   export const superadminrefreshTokenService = async (token) => {

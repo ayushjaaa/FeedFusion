@@ -28,6 +28,8 @@ Userroutes.post('/login',
   },userController.loginUser)
 
 
+Userroutes.post('/getdetails',authmidelware,userController.details)
+
 
 Userroutes.post('/intrestpost',authmidelware,userController.intrestpost)
 Userroutes.post('/lick/:id',authmidelware,userController.likepost)

@@ -17,7 +17,7 @@ export const authmidelware = async(req,res,next) =>{
 
        
         req.user = decoded;
-        // console.log(req.user)
+        console.log(decoded);
     
         // console.log("User authenticated, moving to next middleware.");
         next();  
