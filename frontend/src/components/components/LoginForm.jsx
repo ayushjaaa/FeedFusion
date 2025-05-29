@@ -3,12 +3,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify'
 import { login } from '../../features/auth/authSlice';
-
+import { useTheme } from '@emotion/react';
 const LoginForm = () => {
   const navigate = useNavigate();
   const b =  useSelector((state) => state.counter)
   console.log(b)
-
+const theme = useTheme()
   const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
@@ -56,7 +56,7 @@ const LoginForm = () => {
   }
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-blue-500 to-teal-400">
+    <div className="flex justify-center items-center min-h-screen  bg-gradient-to-r bg-theme.palette.background.alt to-teal-400">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-sm">
         <h2 className="text-3xl font-semibold text-center text-gray-800 mb-6">Login</h2>
         <form className="space-y-6" onSubmit={handleLoginSubmit}>

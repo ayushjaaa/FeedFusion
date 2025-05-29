@@ -5,6 +5,7 @@ import RegisterForm from '../../../components/components/RegisterForm'
 import Home from '../../../components/Home'
 import DynamicTreeForm from '../../../components/components/DynamicTreeForm'
 import AdminDashboard from '../../../components/AdminDashboard'
+import PostFromwraper from '../../../features/Postform/PostFromwraper'
 const LoginRoute = () => {
   return (
     <div>
@@ -15,7 +16,7 @@ const LoginRoute = () => {
 
         <Route path='/rr' element={<AdminDashboard/>}/>
 
-
+<Route path='/postform' element={<PostFromwraper/>}></Route>
    </Routes>
     </div>
   )

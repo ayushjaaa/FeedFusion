@@ -28,12 +28,12 @@ const ProtecteRoute = () => {
                <Route path="/allpost" element={<Allposts />} />
                <Route path="/addpost" element={< DynamicTreeForm/>} />
          
-               <Route path="/interests" element={<UseTreeItemHookProperties />} />
-        <Route path="interests/:id" element={<UseTreeItemHookProperties />} />
+            
                
          
         </Route>  
-   
+        <Route path="/interests" element={<UseTreeItemHookProperties />} />
+        <Route path="interests/:id" element={<UseTreeItemHookProperties />} />
       </Routes>
     </div>
   );
