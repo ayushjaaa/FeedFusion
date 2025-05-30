@@ -1,47 +1,76 @@
-import React from 'react'
+import React, { act } from 'react'
 import { createSlice,createAsyncThunk } from '@reduxjs/toolkit'
 import axiosInstance from '../../services/axiosInstance'
 import axios from 'axios'
 
-export const submitPost = createAsyncThunk('user/details',async({token,url},{rejectWithValue})=>{
- console.log(token)
- try{
-const response = await axios.post("http://localhost:3000/user/post",{},{
- headers: {
-   "Content-Type": "application/json",
-   Authorization: `Bearer ${token}`,
- },
-})
-console.log(response)
- }catch(error){
-   console.log(error)
- }
-})
-
+export const submitPost = createAsyncThunk(
+    'post/submitPost',
+    async ({ token, postData }, { rejectWithValue }) => {
+      try {
+        const response = await axios.post(
+          'http://localhost:3000/admin/post',
+          postData,
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${token}`
+            }
+          }
+        );
+        return response.data;
+      } catch (error) {
+        return rejectWithValue(error.response.data);
+      }
+    }
+  );
+  
 const initialState = {
 Postcontent:{
   titel:"",
   content:"",
-  interests:""
+  interests:[]
 },
-intrestSumit:false
+intrestSumit:false,
+lodrding:false,
+error: null
 }
 export const PostFormSlice = createSlice({
  name:'userdetails',
  initialState,
  reducers:{
+    formdata:(state)=>{
+state.Postcontent
+    },
 intrestchange:(state) =>{
     state.intrestSumit = !state.intrestSumit
+},
+updatePostField:(state,action)=>{
+    const {field,value} = action.payload
+    state.Postcontent[field] = value;
+     },
+addintrest:(state,action)=>{
+   const incoming =  action.payload;
+   const current = state.Postcontent.interests;
+   const unique = incoming.filter((item)=>!current.includes(item))
+   state.Postcontent.interests.push(...unique);
 }
+
  },
-//  extraReducers:(builder)=>{
-//    builder.addCase(getuserdetails.pending,(state)=>{
-//      state.lodrding = true
-//    })
-//  .addCase(getuserdetails.fulfilled,(state,action)=>{
-//    console.log(action.payload)
-//  })
-//  }
+
+ extraReducers:(builder)=>{
+    builder
+    .addCase(submitPost.pending, (state) => {
+      state.loading = true;
+    })
+    .addCase(submitPost.fulfilled, (state, action) => {
+      state.loading = false;
+      state.intrestSumit = true;
+    })
+    .addCase(submitPost.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
+ }
 })
-export const {intrestchange} = PostFormSlice.actions;
+export const {intrestchange,updatePostField,addintrest} = PostFormSlice.actions;
 export default PostFormSlice.reducer

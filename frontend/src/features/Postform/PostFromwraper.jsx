@@ -31,8 +31,8 @@ const Final_Step = Object.keys(page).length;
 const submitBttonText = Final_Step == currentStep ? "save":"next";
 
   return (
-<div className="flex justify-center items-center min-h-screen  bg-gradient-to-r bg-theme.palette.background.alt to-teal-400 ">
-  <div className="w-full max-w-md h-auto flex flex-col gap-8  p-6 rounded-lg shadow-lg">
+<div className={` w-full flex justify-center items-center min-h-screen  bg-gradient-to-r bg-theme.palette.background.alt to-teal-400`}>
+  <div className="w-full max-w-md h-auto flex flex-col gap-8  p-6 rounded-lg ">
     <Component />
 
     <button

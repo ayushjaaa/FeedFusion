@@ -1,4 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { allpostgata } from './allpostSlice';
 import {
     Box,
     Typography,
@@ -22,6 +25,8 @@ import {
   import Flexbetween from '../../components/FlexBetween';
   import Header from '../../components/Header';
   import MonthBadge from '../../components/MonthBadge';
+
+
   const Posts = [
     {
       title: "AI Revolutionizes Newsrooms",
@@ -66,9 +71,9 @@ import {
 
 const Post = ({title,category,author,date,avatar,excerpt,tags,likes,saves,reports,badge})=>{
  const theme = useTheme();
- console.log(theme)
+//  console.log(theme)
 const [expanded, setexpanded] = useState(false)
-console.log(tags)
+// console.log(tags)
 return(
     <Grid item xs={12} sm={6} md={4}>
     <Card sx={{ p: 2, borderRadius: 3,backgroundColor:theme.palette.background.default }}>
@@ -151,6 +156,24 @@ return(
 }
 
 const Allposts = () => {
+  const dispatch = useDispatch()
+  const {role,token} = useSelector((state)=>state.counter.auth )
+ const Token = token
+ console.log(Token)
+  const RoleInput = role
+  useEffect(() => {
+    if (!Token || !RoleInput) return;
+  
+    dispatch(allpostgata({ RoleInput, Token, url: "/superadmin/allpost" }))
+      .unwrap()
+      .then((result) => {
+        console.log("Success:", result);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }, [Token, RoleInput]);
+  
   return (
     <div>
   <Box sx={{ p: 4 }}>

@@ -38,7 +38,7 @@ const  initialState = {
     token: localStorage.getItem('token') ||  null,
     loading: false,
     error: null,
-    role:null
+    role:null || localStorage.getItem('role') ||null
 }
 export const authSlice = createSlice({
     name:"auth",
@@ -53,7 +53,9 @@ export const authSlice = createSlice({
             console.log(action.payload)
             state.loading = false
             state.token = action.payload.accessToken
-            state.role = action.payload.role
+            // state.role = action.payload.role
+            localStorage.setItem('role',action.payload.role)
+
             state.error = ''
             localStorage.setItem("token", action.payload.accessToken);
         })

@@ -104,12 +104,14 @@ catch(error){
 
 export const allpost = async(req,res) =>{
 try{
+  
     const post = await postModel.find({})
 console.log(post)
 
 if(!post){
     return res.status(403).json({message:'no post'})
 }
+return res.status(200).json({data:post})
 }catch(error){
     console.log(error)
     return res.status(500).json({message:'intreanl server error'})

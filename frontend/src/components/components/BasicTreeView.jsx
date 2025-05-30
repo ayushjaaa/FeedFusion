@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { intrestchange } from "../../features/Postform/PostFormSlice";
+import { intrestchange,addintrest } from "../../features/Postform/PostFormSlice";
+import { useTheme } from "@emotion/react";
+import { useSelector } from "react-redux";
+import {submitPost} from '../../features/Postform/PostFormSlice'
 
 // Sample data
 const interestData = [
@@ -27,6 +30,8 @@ const interestData = [
   },
 ];
 
+
+
 // Recursive finder function
 const findItemById = (items, id) => {
   for (let item of items) {
@@ -40,10 +45,25 @@ const findItemById = (items, id) => {
 };
 
 const BasicTreeView = () => {
+const {Postcontent} = useSelector((state)=>state.counter.FormData)
+const token = useSelector((state) => state.counter.auth.token);
+console.log(token)
+
+  const theme = useTheme()
   const [intrest, setintrest] = useState([]);
   const navigate = useNavigate();
   const { id } = useParams();
   const dispatch = useDispatch();
+
+  function SubmitIntrest(e) {
+    alert("Submit logic can go here")
+    console.log(Postcontent)
+    dispatch(submitPost(token,Postcontent))
+    navigate('/app/allpost')
+
+  }
+  dispatch(addintrest(intrest))
+  
 
   let currentItems = interestData;
   if (id) {
@@ -76,7 +96,7 @@ const BasicTreeView = () => {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center p-10 box-border bg-white">
+    <div className="min-h-screen flex flex-col justify-center items-center p-10 box-border ">
       <h2 className="text-4xl font-bold mb-8 text-center text-gray-800">
         {id
           ? currentItems.length > 0
@@ -87,7 +107,7 @@ const BasicTreeView = () => {
 
       {currentItems.length === 0 ? (
         <button
-          onClick={() => alert("Submit logic can go here")}
+          onClick={() => SubmitIntrest()}
           className="px-7 py-3 bg-green-600 text-white rounded-lg text-lg font-semibold cursor-pointer transition-colors duration-300 hover:bg-green-700 focus:outline-none"
         >
           Submit Now

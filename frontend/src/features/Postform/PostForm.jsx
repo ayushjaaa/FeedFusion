@@ -1,9 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {updatePostField} from './PostFormSlice'
 
 const PostForm = () => {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
+  const dispatch = useDispatch()
+const {Postcontent} = useSelector((state)=>state.counter.FormData)
+  
+console.log(Postcontent)
 
+
+useEffect(() => {
+
+  
+}, [])
+
+
+const handleChange = (e) =>{
+console.log(  e.target.name)
+dispatch(updatePostField({field: e.target.name, value: e.target.value}))
+}
   function handlePostSubmit(e) {
     e.preventDefault();
 
@@ -13,17 +28,18 @@ const PostForm = () => {
     }
 
     // For now just log the post data
-    const postData = {
-      title,
-      content,
-    };
-    console.log("Posting article:", postData);
+    // const postData = {
+    //   title,
+    //   content,
+    // };
+    // console.log("Posting article:", postData);
+    // dispatch
 
-    // Reset form
-    setTitle("");
-    setContent("");
+    // // Reset form
+    // setTitle("");
+    // setContent("");
 
-    alert("Article posted successfully!");
+    // alert("Article posted successfully!");
   }
 
   return (
@@ -39,8 +55,9 @@ const PostForm = () => {
             <input
               type="text"
               id="title"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
+               name="titel"
+              value={Postcontent.title}
+              onChange={ handleChange}
               className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-900"
               placeholder="Enter article title"
             />
@@ -53,8 +70,9 @@ const PostForm = () => {
             </label>
             <textarea
               id="content"
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
+              value={Postcontent.content}
+              onChange={handleChange}
+              name='content'
               className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-900"
               placeholder="Write your article content here..."
               rows={6}
