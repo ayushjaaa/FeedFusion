@@ -18,7 +18,7 @@ const Layout = () => {
 </Sidebar>
 
 <Box>
- <Navbar setisSidebsarOpen={setisSidebsarOpen} isSidebarOpen={isSidebarOpen} sx={{flexGrow:1}}/>
+ <Navbar setisSidebsarOpen={setisSidebsarOpen} isSidebarOpen={isSidebarOpen}  sx={{flexGrow:1}}/>
 
  <Outlet/>
 </Box>
