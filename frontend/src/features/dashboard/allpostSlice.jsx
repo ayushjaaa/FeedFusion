@@ -19,7 +19,7 @@ return rejectWithValue("loginfeild")
 })
 
 const initialState ={
-    posts: [],        // Array of objects from backend
+    posts: [],        // Array of objec ts from backend
   loading: false,   // For loading spinner
   error: null       // For error handling
 }
