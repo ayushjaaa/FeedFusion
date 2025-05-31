@@ -30,7 +30,7 @@ export const userdetailsSlice = createSlice({
       state.lodrding = true
     })
   .addCase(getuserdetails.fulfilled,(state,action)=>{
-    console.log(action.payload)
+    console.log(action.payload) 
   })
   }
 })
