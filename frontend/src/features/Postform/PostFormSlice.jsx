@@ -1,14 +1,14 @@
 import React, { act } from 'react'
 import { createSlice,createAsyncThunk } from '@reduxjs/toolkit'
-import axiosInstance from '../../services/axiosInstance'
+import {axiosInstance} from '../../services/axiosInstance'
 import axios from 'axios'
 
 export const submitPost = createAsyncThunk(
     'post/submitPost',
-    async ({ token, postData }, { rejectWithValue }) => {
+    async ({ url,token, postData }, { rejectWithValue }) => {
       try {
-        const response = await axios.post(
-          'http://localhost:3000/admin/post',
+        const response = await axiosInstance.post(
+          url,
           postData,
           {
             headers: {

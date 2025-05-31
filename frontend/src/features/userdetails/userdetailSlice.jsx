@@ -1,6 +1,6 @@
  import React from 'react'
  import { createSlice,createAsyncThunk } from '@reduxjs/toolkit'
- import axiosInstance from '../../services/axiosInstance'
+ import {axiosInstancePublic} from '../../services/axiosInstance'
 import axios from 'axios'
  
  export const getuserdetails = createAsyncThunk('user/details',async({token,url},{rejectWithValue})=>{

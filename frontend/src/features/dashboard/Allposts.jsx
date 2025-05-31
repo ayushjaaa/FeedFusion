@@ -171,6 +171,7 @@ const Allposts = () => {
       })
       .catch((error) => {
         console.error("Error:", error);
+        
       });
   }, [Token, RoleInput]);
   

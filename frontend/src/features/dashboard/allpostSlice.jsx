@@ -1,6 +1,6 @@
 import React from "react";
 import { createSlice,createAsyncThunk } from "@reduxjs/toolkit";
-import axiosInstance from "../../services/axiosInstance";
+import {axiosInstance} from "../../services/axiosInstance";
 
 export const allpostgata = createAsyncThunk("allpost",async({RoleInput,Token,url},{rejectWithValue})=>{
     try{
@@ -14,6 +14,7 @@ console.log(response)
 return response
     }catch(error){
 console.log(error)
+console.log('status',error.response.status)
 return rejectWithValue("loginfeild")
     }
 })

@@ -54,11 +54,12 @@ console.log(token)
   const navigate = useNavigate();
   const { id } = useParams();
   const dispatch = useDispatch();
-
+const url = "/admin/post"
   function SubmitIntrest(e) {
     alert("Submit logic can go here")
     console.log(Postcontent)
-    dispatch(submitPost(token,Postcontent))
+  
+    dispatch(submitPost(token,Postcontent,url))
     navigate('/app/allpost')
 
   }
