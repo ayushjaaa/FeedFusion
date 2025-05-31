@@ -57,6 +57,8 @@ export const superadminregisterService = async ({ username, email, password, rol
     return { status: 200, accessToken, refreshToken};
   };
   
+
+  // geting access token form the refresh token service for user / admin/superadmin/
   export const superadminrefreshTokenService = async (token) => {
     // console.log(token)
     if (!token) {
@@ -81,7 +83,7 @@ export const superadminregisterService = async ({ username, email, password, rol
       return { status: 403, message: "Token expired or invalid" };
     }
   };
-  
+    // end of geting access token form the refresh token//
 
 
   

@@ -1,6 +1,6 @@
 import express from 'express'
-const arefresTokenroute = express.Router()
+const refreshroute = express.Router()
 import * as superadmincontoller from '../controller/superadmin.controller.js'
-arefresTokenroute.post('/superadminrefresh-token',superadmincontoller.refreshToken)
+refreshroute.post('/refresh',superadmincontoller.refreshToken)
 
-export default arefresTokenroute
+export default refreshroute

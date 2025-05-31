@@ -72,7 +72,11 @@ export const refreshTokenService = async (token) => {
 
   try {
     // console.log(config.JWT_REFERESH_SECRET)
-    jwt.verify(token, config.JWT_REFERESH_SECRET);
+   const decode = jwt.verify(token, config.JWT_REFERESH_SECRET);
+   console.log(decode)
+   if(!decode){
+    return {status:401,message:"Invalid"}
+   }
     const newAccessToken = user.generateAccessToken();
     return { status: 200, accessToken: newAccessToken };
   } catch (error) {
