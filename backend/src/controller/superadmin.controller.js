@@ -106,6 +106,11 @@ export const allpost = async(req,res) =>{
 try{
   
     const post = await postModel.find({})
+    .populate({
+      path: "createdBy",
+      select: "username email role",
+     
+    });
 console.log(post)
 
 if(!post){

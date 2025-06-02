@@ -11,10 +11,12 @@ export const axiosInstance = axios.create({
 })
 
 export const refreshAccessToken = async()=>{
-    const response = await axiosInstance.get("http://localhost:3000/api/auth/refresh-token")
-    const newAccessToken = response
+
+    const refreshResponse = await axiosInstance.post("/api/auth/refresh-token");
+    const newAccessToken = refreshResponse.data.accessToken
+    axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${newAccessToken}`;
     return newAccessToken
-    API.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`;
+ 
 }
 
 export const setAuthToken = token =>{

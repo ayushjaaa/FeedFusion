@@ -158,6 +158,7 @@ return(
 const Allposts = () => {
   const dispatch = useDispatch()
   const {role,token} = useSelector((state)=>state.counter.auth )
+  const [allpost, setallpost] = useState(null)
  const Token = token
  console.log(Token)
   const RoleInput = role
@@ -168,6 +169,8 @@ const Allposts = () => {
       .unwrap()
       .then((result) => {
         console.log("Success:", result);
+        setallpost(result)
+
       })
       .catch((error) => {
         console.error("Error:", error);
