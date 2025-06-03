@@ -5,11 +5,12 @@ import axios from 'axios'
 
 export const submitPost = createAsyncThunk(
     'post/submitPost',
-    async ({ url,token, postData }, { rejectWithValue }) => {
+    async ({ url,token, Postcontent }, { rejectWithValue }) => {
+      console.log(postData)
       try {
         const response = await axiosInstance.post(
           url,
-          postData,
+          Postcontent,
           {
             headers: {
               'Content-Type': 'application/json',

@@ -9,14 +9,14 @@ import {submitPost} from '../../features/Postform/PostFormSlice'
 // Sample data
 const interestData = [
   {
-    id: "tech",
+    id: "1",
     label: "Tech",
     children: [
       {
-        id: "programming",
+        id: "2",
         label: "Programming",
         children: [
-          { id: "javascript", label: "JavaScript" },
+          { id: "2", label: "JavaScript" },
           { id: "python", label: "Python" },
         ],
       },
@@ -51,6 +51,7 @@ console.log(token)
 
   const theme = useTheme()
   const [intrest, setintrest] = useState([]);
+  console.log(intrest)
   const navigate = useNavigate();
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -60,7 +61,7 @@ const url = "/admin/post"
     console.log(Postcontent)
   
     dispatch(submitPost(token,Postcontent,url))
-    navigate('/app/allpost')
+    navigate('/superadmin/post')
 
   }
   dispatch(addintrest(intrest))

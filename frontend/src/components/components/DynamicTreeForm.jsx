@@ -1,8 +1,16 @@
 import React, { useState, useRef } from 'react';
-
+import { useDispatch } from 'react-redux';
+import {submitInterest} from '../../features/intrestbysuperadmin/Intrestbysuperadmin'
+import { useSelector } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify'
+import { useNavigate } from 'react-router-dom';
 const DynamicTreeForm = () => {
   // Unique ID generator
   const nextId = useRef(1);
+
+  const dispatch = useDispatch()
+  const {token} = useSelector((state)=>state.counter.auth)
+  const navigate = useNavigate()
 
   // Root node state
   const [treeData, setTreeData] = useState({
@@ -99,7 +107,21 @@ const DynamicTreeForm = () => {
   );
 
   // Submit data
-  const handleSubmit = () => console.log({ data: treeData });
+  const handleSubmit = () =>{
+    const url = "/superadmin/intrest";
+    const Token = token;
+    console.log(treeData)
+     dispatch(submitInterest({url,Token,treeData})).unwrap().then((result)=>{
+ toast.success("interest created successful");
+ navigate("/app/allpost")
+     })
+     .catch((error)=>{
+      console.log(error)
+      toast.error("login plz")
+      navigate('/login')
+
+     })
+  };
 
   return (
     <div className="p-6 max-w-2xl mx-auto">

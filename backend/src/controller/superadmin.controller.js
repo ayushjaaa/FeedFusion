@@ -1,14 +1,35 @@
 import { header, validationResult } from "express-validator";
+
+
 import jwt from 'jsonwebtoken'
 import config from "../config/config.js";
 import InterestModel from "../models/interest.js";
 import userModel from "../models/user.js";
+import PostModel from "../models/post.js";
 import {
   superadminregisterService,
   superadminloginUserService,
   superadminrefreshTokenService,
 } from "../serves/superadmin.service.js";
 import postModel from "../models/post.js";
+
+
+
+export const createpost = async (req,res)=>{
+
+    const user = req.user
+    const data = req.body
+    
+    PostModel.create({
+      title:data.title,
+      content:data.content,
+      createdBy:user._id,
+      interests:data.interests,
+      
+    })
+    res.status(200).json({data})
+  
+}
 
 
 export const registersuperadmin = async (req, res) => {
@@ -65,18 +86,27 @@ export const refreshToken = async (req, res) => {
 };
 
 
-export const postIntrest = async (req,res) =>{
+export const postIntrest = async(req,res) =>{
 try{
-    const {data} = req.body
+    const data = req.body
+    console.log(req.body)
     if(!data){
-        res.status(400).json({message:"data is missing"})
+       return res.status(400).json({message:"data is missing"})
     }
     const refreshtoken = req.headers.authorization?.split(" ")[1]
-const decoded = await jwt.verify(refreshtoken,config.JWT_access_SECRET)
-if(!decoded){
-    return res.status(400).json({message:"refresh token expired or Invalid"})
+
+
+// if(!decoded){
+//     return res.status(400).json({message:"refresh token expired or Invalid"})
+// }
+let decoded;
+try{
+   decoded = await jwt.verify(refreshtoken,config.JWT_access_SECRET)
+
+}catch(error){
+  console.error("JWT error:");
+  return res.status(401).json({ message: "Access token expired or invalid" });
 }
-console.log(decoded._id)
 
 const createInterestRecursively = async (data,parent = null ) =>{
     const newintrest = await InterestModel.create({
@@ -110,7 +140,7 @@ try{
       path: "createdBy",
       select: "username email role",
      
-    });
+    })
 console.log(post)
 
 if(!post){
