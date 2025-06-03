@@ -84,7 +84,7 @@ export const refreshToken = async (req, res) => {
 
   res.json({ accessToken: result.accessToken });
 };
- 
+     
 
 export const postIntrest = async(req,res) =>{
 try{
