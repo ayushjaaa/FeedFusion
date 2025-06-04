@@ -16,10 +16,31 @@ import postModel from "../models/post.js";
 
 
 export const createpost = async (req,res)=>{
-
+console.log(req.body)
     const user = req.user
-    const data = req.body
-    
+    const {title,content,interests} = req.body
+    const errors = [];
+    if (!title || title.trim() === "") {
+      errors.push({ field: "title", message: "Title is required" });
+    }
+
+    if (!content || content.trim() === "") {
+      errors.push({ field: "content", message: "Content is required" });
+    }
+
+    if (!Array.isArray(interests) || interests.length === 0) {
+      errors.push({ field: "interests", message: "At least one interest must be selected" });
+    }
+    if (errors.length > 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Validation failed",
+        errors
+      });
+    }
+  
+
+     // If validation passes - proceed to save
     PostModel.create({
       title:data.title,
       content:data.content,
@@ -27,7 +48,11 @@ export const createpost = async (req,res)=>{
       interests:data.interests,
       
     })
-    res.status(200).json({data})
+    return res.status(201).json({
+      success: true,
+      message: "Post created successfully",
+      post: newPost  //  use if it is need  created post //
+    });
   
 }
 
@@ -84,7 +109,7 @@ export const refreshToken = async (req, res) => {
 
   res.json({ accessToken: result.accessToken });
 };
-     
+
 
 export const postIntrest = async(req,res) =>{
 try{
@@ -102,6 +127,7 @@ try{
 let decoded;
 try{
    decoded = await jwt.verify(refreshtoken,config.JWT_access_SECRET)
+   console.log("decoded",decoded)
 
 }catch(error){
   console.error("JWT error:");
@@ -131,6 +157,7 @@ catch(error){
     res.status(500).json({message:"Internal Server Error"})
 }
 }
+
 
 export const allpost = async(req,res) =>{
 try{

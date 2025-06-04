@@ -61,7 +61,7 @@ const url = "/admin/post"
     console.log(Postcontent)
   
     dispatch(submitPost(token,Postcontent,url))
-    navigate('/superadmin/post')
+    navigate('/superadmin/createpost')
 
   }
   dispatch(addintrest(intrest))

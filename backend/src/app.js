@@ -7,6 +7,7 @@ import refreshroute from './routes/superadminrefreshtoken.js'
 
 import refresTokenroute from "./routes/accesstoken.js";
 import { adminRoutes } from "./routes/admin.js";
+import commanroutes from "./routes/commanroute.js";
 import cors from 'cors';
 
 
@@ -31,5 +32,8 @@ app.use('/superadmin',superadminroutes) // super admin login and register   //
 app.use('/user',Userroutes)
 app.use("/admin",adminRoutes)
 
+
+//coman //after auth//
+app.use('/commanroutes',commanroutes)
 
 export default app;
