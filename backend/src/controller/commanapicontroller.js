@@ -3,6 +3,7 @@ import InterestModel from "../models/interest.js";
 export const fetchintrest = async(req,res)=>{
   
     try{
+    
       const fetchedintrest = await InterestModel.find({})
       console.log(fetchedintrest)
 

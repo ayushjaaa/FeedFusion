@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { intrestchange,addintrest } from "../../features/Postform/PostFormSlice";
+import {fetchInterests} from '../../features/intrestbysuperadmin/Intrestbysuperadmin'
 import { useTheme } from "@emotion/react";
 import { useSelector } from "react-redux";
 import {submitPost} from '../../features/Postform/PostFormSlice'
@@ -47,18 +48,31 @@ const findItemById = (items, id) => {
 const BasicTreeView = () => {
 const {Postcontent} = useSelector((state)=>state.counter.FormData)
 const token = useSelector((state) => state.counter.auth.token);
-console.log(token)
+const dispatch = useDispatch();
+const d = useSelector((state)=>state.counter)
+console.log(d)
+
+useEffect(() => {
+ const url ="/commanroutes/fetchintrest";
+  const Token = token;
+  dispatch(fetchInterests({url,Token})).unwrap().then((result)=>
+  console.log(result))
+  .catch((error)=>console.log(error))
+
+
+}, [])
+
 
   const theme = useTheme()
   const [intrest, setintrest] = useState([]);
-  console.log(intrest)
+  // console.log(intrest)
   const navigate = useNavigate();
   const { id } = useParams();
-  const dispatch = useDispatch();
+
 const url = "/admin/post"
   function SubmitIntrest(e) {
     alert("Submit logic can go here")
-    console.log(Postcontent)
+    // console.log(Postcontent)
   
     dispatch(submitPost(token,Postcontent,url))
     navigate('/superadmin/createpost')
