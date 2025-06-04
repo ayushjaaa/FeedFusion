@@ -7,7 +7,17 @@ import { useTheme } from "@emotion/react";
 import { useSelector } from "react-redux";
 import {submitPost} from '../../features/Postform/PostFormSlice'
 
-// Sample data
+// Sample data //
+
+
+const BasicTreeView = () => {
+const {Postcontent} = useSelector((state)=>state.counter.FormData)
+const token = useSelector((state) => state.counter.auth.token);
+const dispatch = useDispatch();
+const d = useSelector((state)=>state.counter)
+console.log(d)
+
+
 const interestData = [
   {
     id: "1",
@@ -45,12 +55,6 @@ const findItemById = (items, id) => {
   return null;
 };
 
-const BasicTreeView = () => {
-const {Postcontent} = useSelector((state)=>state.counter.FormData)
-const token = useSelector((state) => state.counter.auth.token);
-const dispatch = useDispatch();
-const d = useSelector((state)=>state.counter)
-console.log(d)
 
 useEffect(() => {
  const url ="/commanroutes/fetchintrest";
@@ -59,8 +63,8 @@ useEffect(() => {
   console.log(result))
   .catch((error)=>console.log(error))
 
-
 }, [])
+
 
 
   const theme = useTheme()
@@ -87,8 +91,7 @@ const url = "/admin/post"
     if (found?.children && found.children.length === 0) {
       dispatch(intrestchange());
     }
-    if (found && found.children) {
-      currentItems = found.children;
+    if (found && found.children) {     currentItems = found.children;
     } else {
       currentItems = [];
     }
