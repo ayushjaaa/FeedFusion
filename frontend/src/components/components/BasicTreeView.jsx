@@ -165,7 +165,7 @@ console.log(filteredInterests)
             key={interest._id}
             onClick={() => setSelectedId(interest._id)}
             style={{ cursor: 'pointer', margin: '8px 0' }}
-          >
+          >    
             {interest.name}   
           </li>
         ))}
