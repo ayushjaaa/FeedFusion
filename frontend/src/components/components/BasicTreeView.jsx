@@ -172,6 +172,6 @@ console.log(filteredInterests)
       </ul> 
     </div>
   );
-};
+}; 
 
 export default BasicTreeView
