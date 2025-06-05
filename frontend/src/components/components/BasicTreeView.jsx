@@ -169,7 +169,7 @@ console.log(filteredInterests)
             {interest.name}
           </li>
         ))}
-      </ul>
+      </ul> 
     </div>
   );
 };
