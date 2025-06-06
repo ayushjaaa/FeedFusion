@@ -35,15 +35,17 @@ const submitBttonText = Final_Step == currentStep ? "save":"next";
   <div className="w-full max-w-md h-auto flex flex-col gap-8  p-6 rounded-lg ">
     <Component />
 
-    <button
-      type="submit"
-      // disabled={!title || !content}
-      onClick={()=>ForwardStepHandler()}
-      className="w-[120px] self-center py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-400 disabled:cursor-not-allowed"
-    >
-      {submitBttonText}
+{
+  submitBttonText == "next" ?     <button
+  type="submit"
+  // disabled={!title || !content}
+  onClick={()=>ForwardStepHandler()}
+  className="w-[120px] self-center py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-400 disabled:cursor-not-allowed"
+>
+  {submitBttonText}
 
-    </button>
+</button> :null
+}
   </div>
 </div>
 

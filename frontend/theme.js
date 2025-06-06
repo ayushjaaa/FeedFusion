@@ -49,37 +49,25 @@ export const tokensDark = {
       jun: { bg: "#FAF5FF",bg2: "#A855F7", text: "#262626" },   // Purple bg, white text
     },
     interestColors: {
-      teal: {
-        main: "#14B8A6",     // Teal
-        light: "#CCFBF1",
+      green: {
+        main: "#43A047",
+        light: "#E8F5E9",
       },
-      orange: {
-        main: "#F97316",     // Orange
-        light: "#FFEDD5",
+      yellow: {
+        main: "#FDD835",
+        light: "#FFF9C4",
       },
-      purple: {
-        main: "#8B5CF6",     // Violet
-        light: "#EDE9FE",
+      blue: {
+        main: "#1E88E5",
+        light: "#E3F2FD",
       },
-      rose: {
-        main: "#F43F5E",     // Rose
-        light: "#FFE4E6",
+      pink: {
+        main: "#D81B60",
+        light: "#FCE4EC",
       },
-      cyan: {
-        main: "#06B6D4",     // Cyan
-        light: "#CFFAFE",
-      },
-      lime: {
-        main: "#84CC16",     // Lime
-        light: "#ECFCCB",
-      },
-      amber: {
-        main: "#F59E0B",     // Amber
-        light: "#FEF3C7",
-      },
-      sky: {
-        main: "#0EA5E9",     // Sky blue
-        light: "#E0F2FE",
+      indigo: {
+        main: "#5C6BC0",
+        light: "#E8EAF6",
       },
     }   
 

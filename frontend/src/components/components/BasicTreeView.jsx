@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import {submitPost} from '../../features/Postform/PostFormSlice'
 import { Box, Typography, Button, Chip, Stack, CircularProgress } from "@mui/material";
 
-// // Sample data //
+
 
 
 // const BasicTreeView = () => {
@@ -157,7 +157,6 @@ const BasicTreeView = () => {
     (item) => item.parentId === currentParentId
   );
 
-  // Convert theme color object to array
   const interestColorsArray = Object.values(theme.palette.interestColors || {});
 
   useEffect(() => {
@@ -166,10 +165,10 @@ const BasicTreeView = () => {
       .unwrap()
       .then(() => setLoading(false))
       .catch((error) => {
-        console.log(error);
+        console.log("Error while fetching intrest:", error);
         setLoading(false);
       });
-  }, []);
+  }, [dispatch, Token]);
 
   const goBack = () => {
     setPath((prev) => prev.slice(0, -1));
@@ -180,16 +179,42 @@ const BasicTreeView = () => {
   };
 
   return (
-    <Box sx={{ p: 3, maxWidth: "700px", mx: "auto" }}>
-      <Typography variant="h4" fontWeight="bold" gutterBottom>
-        Select Your Interests
-      </Typography>
+    <Box
+      sx={{
+        p: { xs: 2, sm: 4 },
+        maxWidth: "800px",
+        mx: "auto",
+        mt: { xs: 4, sm: 6 },
+      }}
+    >
+{
+  filteredInterests.length > 0 ?      <Typography
+  variant="h4"
+  fontWeight="bold"
+  gutterBottom
+  textAlign="center"
+  fontSize={{ xs: "1.6rem", sm: "2rem" }}
+>
+  Select Your Interests
+</Typography> : <Typography
+          variant="body1"
+          color="text.secondary"
+          textAlign="center"
+          mt={2}
+          sx={{ fontSize: "1.4rem",    }}
+        >
+          All  Interests Are Done
+        </Typography>
+}
 
       {path.length > 0 && (
         <Button
           variant="outlined"
           onClick={goBack}
-          sx={{ mb: 2 }}
+          sx={{ mb: 2,backgroundColor:"#BDBDBD", "&:hover": {
+            backgroundColor: "#E0E0E0",
+          } }}
+
         >
           ⬅️ Go Back
         </Button>
@@ -200,44 +225,68 @@ const BasicTreeView = () => {
           <CircularProgress />
         </Box>
       ) : (
-        <Stack direction="row" flexWrap="wrap" spacing={1} useFlexGap>
-          {filteredInterests.length > 0 ? (
-            filteredInterests.map((elem, index) => {
-              const color =
-                interestColorsArray[index % interestColorsArray.length] || {
-                  main: "#333",
-                  light: "#eee",
-                };
+        <>
+          <Stack
+            direction="row"
+            flexWrap="wrap"
+            spacing={1.5}
+            useFlexGap
+            justifyContent={{ xs: "center", sm: "flex-start" }}
+          >
+            {filteredInterests.length > 0 ? (
+              filteredInterests.map((elem, index) => {
+                const color =
+                  interestColorsArray[index % interestColorsArray.length] || {
+                    main: "#333",
+                    light: "#eee",
+                  };
 
-              return (
-                <Chip
-                  key={elem._id}
-                  label={elem.name}
-                  onClick={() => handleInterestClick(elem._id)}
-                  sx={{
-                    backgroundColor: color.light,
-                    color: color.main,
-                    fontWeight: 500,
-                    px: 1.5,
-                    py: 0.5,
-                    fontSize: "0.9rem",
-                    borderRadius: "8px",
-                    cursor: "pointer",
-                    transition: "0.3s",
-                    "&:hover": {
-                      backgroundColor: color.main,
-                      color: "#fff",
-                    },
-                  }}
-                />
-              );
-            })
-          ) : (
-            <Typography variant="body1" color="text.secondary" mt={2}>
-              No interests available at this level.
-            </Typography>
+                return (
+                  <Chip
+                    key={elem._id}
+                    label={elem.name}
+                    onClick={() => handleInterestClick(elem._id)}
+                    sx={{
+                      backgroundColor: color.light,
+                      color: color.main,
+                      fontWeight: 500,
+                      px: 1.5,
+                      py: 0.5,
+                      fontSize: "0.9rem",
+                      borderRadius: "8px",
+                      cursor: "pointer",
+                      transition: "0.3s",
+                      "&:hover": {
+                        backgroundColor: color.main,
+                        color: "#fff",
+                      },
+                    }}
+                  />
+                );
+              })
+            ) : (
+             null  
+            )}
+          </Stack>
+
+          {/* Save button when no more nested interests */}
+          {filteredInterests.length === 0 && (
+            <Box display="flex" justifyContent="center" mt={4}>
+              <Button
+                variant="contained"
+                color="primary"
+                sx={{ fontSize: "1rem", px: 4, py: 1.5, borderRadius: "8px" }}
+                onClick={() => {
+                  console.log("Selected Path:", path);
+                  dispatch(addintrest(path)); // optional if you want to save path
+                  // dispatch(submitPost()) // optional if you want to submit post now
+                }}
+              >
+                save
+              </Button>
+            </Box>
           )}
-        </Stack>
+        </>
       )}
     </Box>
   );
