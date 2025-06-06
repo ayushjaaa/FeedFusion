@@ -115,3 +115,5 @@ const IntrestSlice = createSlice({
 });
 
 export default IntrestSlice.reducer;
+export const selectAllInterests = (state) => state.counter.Intrest.fetchedInterests.Interests;
+export const selectFetchStatus = (state) => state.counter.Intrest.fetchedInterests.status;

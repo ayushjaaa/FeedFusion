@@ -1,11 +1,12 @@
-// import React, { useEffect, useState } from "react";
-// import { useParams, useNavigate } from "react-router-dom";
-// import { useDispatch } from "react-redux";
-// import { intrestchange,addintrest } from "../../features/Postform/PostFormSlice";
-// import {fetchInterests} from '../../features/intrestbysuperadmin/Intrestbysuperadmin'
-// import { useTheme } from "@emotion/react";
-// import { useSelector } from "react-redux";
-// import {submitPost} from '../../features/Postform/PostFormSlice'
+import React, { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { intrestchange,addintrest } from "../../features/Postform/PostFormSlice";
+import {fetchInterests,selectAllInterests,selectFetchStatus} from '../../features/intrestbysuperadmin/Intrestbysuperadmin'
+import { useTheme } from "@emotion/react";
+import { useSelector } from "react-redux";
+import {submitPost} from '../../features/Postform/PostFormSlice'
+import { Box, Typography, Button, Chip, Stack, CircularProgress } from "@mui/material";
 
 // // Sample data //
 
@@ -140,38 +141,113 @@
 // export default BasicTreeView;
 
 
-import React, { useState } from 'react';
 
 const BasicTreeView = () => {
-  const [selectedId, setSelectedId] = useState(null);
-  const [interests, setinterests] = useState([
-    { _id: '1', name: 'Tech', parentId: null },
-    { _id: '2', name: 'Programming', parentId: '1' },
-    { _id: '3', name: 'JavaScript', parentId: '2' },
-  ]
+  const dispatch = useDispatch();
+  const Token = useSelector((state) => state.counter.auth.token);
+  const theme = useTheme();
+
+  const interests = useSelector(selectAllInterests);
+  const [path, setPath] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const currentParentId = path.length > 0 ? path[path.length - 1] : null;
+
+  const filteredInterests = interests.filter(
+    (item) => item.parentId === currentParentId
   );
 
-  // Get interests where parentId === selectedId
-  const filteredInterests = interests.filter( 
-    (item) => item.parentId === selectedId
-  );
-console.log(filteredInterests)
+  // Convert theme color object to array
+  const interestColorsArray = Object.values(theme.palette.interestColors || {});
+
+  useEffect(() => {
+    setLoading(true);
+    dispatch(fetchInterests({ url: "/commanroutes/fetchintrest", Token }))
+      .unwrap()
+      .then(() => setLoading(false))
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
+  }, []);
+
+  const goBack = () => {
+    setPath((prev) => prev.slice(0, -1));
+  };
+
+  const handleInterestClick = (id) => {
+    setPath((prev) => [...prev, id]);
+  };
+
   return (
-    <div>
-      <h2>Select Interest</h2>
-      <ul>
-        {filteredInterests.map((interest) => (
-          <li
-            key={interest._id}
-            onClick={() => setSelectedId(interest._id)}
-            style={{ cursor: 'pointer', margin: '8px 0' }}
-          >    
-            {interest.name}   
-          </li>
-        ))}
-      </ul> 
-    </div>
-  );
-}; 
+    <Box sx={{ p: 3, maxWidth: "700px", mx: "auto" }}>
+      <Typography variant="h4" fontWeight="bold" gutterBottom>
+        Select Your Interests
+      </Typography>
 
-export default BasicTreeView
+      {path.length > 0 && (
+        <Button
+          variant="outlined"
+          onClick={goBack}
+          sx={{ mb: 2 }}
+        >
+          ⬅️ Go Back
+        </Button>
+      )}
+
+      {loading ? (
+        <Box display="flex" justifyContent="center" mt={4}>
+          <CircularProgress />
+        </Box>
+      ) : (
+        <Stack direction="row" flexWrap="wrap" spacing={1} useFlexGap>
+          {filteredInterests.length > 0 ? (
+            filteredInterests.map((elem, index) => {
+              const color =
+                interestColorsArray[index % interestColorsArray.length] || {
+                  main: "#333",
+                  light: "#eee",
+                };
+
+              return (
+                <Chip
+                  key={elem._id}
+                  label={elem.name}
+                  onClick={() => handleInterestClick(elem._id)}
+                  sx={{
+                    backgroundColor: color.light,
+                    color: color.main,
+                    fontWeight: 500,
+                    px: 1.5,
+                    py: 0.5,
+                    fontSize: "0.9rem",
+                    borderRadius: "8px",
+                    cursor: "pointer",
+                    transition: "0.3s",
+                    "&:hover": {
+                      backgroundColor: color.main,
+                      color: "#fff",
+                    },
+                  }}
+                />
+              );
+            })
+          ) : (
+            <Typography variant="body1" color="text.secondary" mt={2}>
+              No interests available at this level.
+            </Typography>
+          )}
+        </Stack>
+      )}
+    </Box>
+  );
+};
+
+export default BasicTreeView;
+
+
+
+
+
+
+

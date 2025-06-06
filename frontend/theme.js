@@ -48,6 +48,41 @@ export const tokensDark = {
       may: { bg: "#FDF2F8",bg2: "#EC4899", text: "#262626" },   // Pink bg, white text
       jun: { bg: "#FAF5FF",bg2: "#A855F7", text: "#262626" },   // Purple bg, white text
     },
+    interestColors: {
+      teal: {
+        main: "#14B8A6",     // Teal
+        light: "#CCFBF1",
+      },
+      orange: {
+        main: "#F97316",     // Orange
+        light: "#FFEDD5",
+      },
+      purple: {
+        main: "#8B5CF6",     // Violet
+        light: "#EDE9FE",
+      },
+      rose: {
+        main: "#F43F5E",     // Rose
+        light: "#FFE4E6",
+      },
+      cyan: {
+        main: "#06B6D4",     // Cyan
+        light: "#CFFAFE",
+      },
+      lime: {
+        main: "#84CC16",     // Lime
+        light: "#ECFCCB",
+      },
+      amber: {
+        main: "#F59E0B",     // Amber
+        light: "#FEF3C7",
+      },
+      sky: {
+        main: "#0EA5E9",     // Sky blue
+        light: "#E0F2FE",
+      },
+    }   
+
   };
   
   // function that reverses the color palette
@@ -100,6 +135,9 @@ export const tokensDark = {
                 default: tokensDark.primary[600],
                 alt: tokensDark.primary[500],
               },
+              interestColors: {
+                ...tokensDark.interestColors,
+              }
             }
           : {
             monthlyBadge: {
@@ -124,6 +162,9 @@ export const tokensDark = {
                 default: tokensDark.grey[0],
                 alt: tokensDark.grey[50],
               },
+              interestColors: {
+                ...tokensDark.interestColors, // same colors for light mode
+              }
             }),
       },
       typography: {
