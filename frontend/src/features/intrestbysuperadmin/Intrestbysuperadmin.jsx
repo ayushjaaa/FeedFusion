@@ -30,7 +30,7 @@ export const fetchInterests = createAsyncThunk(
   }
 );
 
-export const submitInterest = createAsyncThunk(
+export const submitInterest = createAsyncThunk( 
   'interests/submit',
   async ({ url, Token, treeData }, { rejectWithValue }) => {
     try {
@@ -86,6 +86,7 @@ const IntrestSlice = createSlice({
         state.fetchedInterests.fetchError = null;
       })
       .addCase(fetchInterests.fulfilled, (state, action) => {
+        console.log(action.payload)
         state.fetchedInterests.fetchLoading = false;
         state.fetchedInterests.status = 'succeeded';
         state.fetchedInterests.Interests = action.payload;
@@ -115,5 +116,7 @@ const IntrestSlice = createSlice({
 });
 
 export default IntrestSlice.reducer;
-export const selectAllInterests = (state) => state.counter.Intrest.fetchedInterests.Interests;
+export const  selectAllInterests = (state) => state.counter.Intrest.fetchedInterests.Interests;
 export const selectFetchStatus = (state) => state.counter.Intrest.fetchedInterests.status;
+export const selectContent = (state) => state.counter.Intrest.fetchedInterests.con;
+

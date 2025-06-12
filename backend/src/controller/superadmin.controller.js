@@ -16,11 +16,12 @@ import postModel from "../models/post.js";
 
 
 export const createpost = async (req,res)=>{
-console.log(req.body)
+console.log("body" + req.body)
     const user = req.user
-    const {title,content,interests} = req.body
+
+    const {titel,content,interests} = req.body
     const errors = [];
-    if (!title || title.trim() === "") {
+    if (!titel || titel.trim() === "") {
       errors.push({ field: "title", message: "Title is required" });
     }
 
@@ -41,11 +42,11 @@ console.log(req.body)
   
 
      // If validation passes - proceed to save
-    PostModel.create({
-      title:data.title,
-      content:data.content,
+   const newPost = PostModel.create({
+      title:titel,
+      content:content,
       createdBy:user._id,
-      interests:data.interests,
+      interests:interests,
       
     })
     return res.status(201).json({

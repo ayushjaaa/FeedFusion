@@ -5,8 +5,9 @@ import axios from 'axios'
 
 export const submitPost = createAsyncThunk(
     'post/submitPost',
-    async ({ url,token, Postcontent }, { rejectWithValue }) => {
-      console.log(postData)
+    async ({ url,Token, Postcontent }, { rejectWithValue }) => {
+      console.log(url,Token,Postcontent)
+      console.log(Postcontent)
       try {
         const response = await axiosInstance.post(
           url,
@@ -14,12 +15,14 @@ export const submitPost = createAsyncThunk(
           {
             headers: {
               'Content-Type': 'application/json',
-              Authorization: `Bearer ${token}`
+              Authorization: `Bearer ${Token}`
             }
           }
         );
+        console.log(response)
         return response.data;
       } catch (error) {
+        console.log(error)
         return rejectWithValue(error.response.data);
       }
     }
@@ -31,6 +34,7 @@ Postcontent:{
   content:"",
   interests:[]
 },
+submitTrigger: false,
 intrestSumit:false,
 lodrding:false,
 error: null
@@ -54,7 +58,12 @@ addintrest:(state,action)=>{
    const current = state.Postcontent.interests;
    const unique = incoming.filter((item)=>!current.includes(item))
    state.Postcontent.interests.push(...unique);
+},
+triggerSubmit: (state) => {
+  console.log('triger chala')
+  state.submitTrigger = true;
 }
+
 
  },
 
@@ -66,6 +75,7 @@ addintrest:(state,action)=>{
     .addCase(submitPost.fulfilled, (state, action) => {
       state.loading = false;
       state.intrestSumit = true;
+
     })
     .addCase(submitPost.rejected, (state, action) => {
       state.loading = false;
@@ -73,5 +83,11 @@ addintrest:(state,action)=>{
     });
  }
 })
-export const {intrestchange,updatePostField,addintrest} = PostFormSlice.actions;
+export const {intrestchange,updatePostField,addintrest,triggerSubmit} = PostFormSlice.actions;
 export default PostFormSlice.reducer
+
+
+
+export const PostTitle = (state) => state.counter.FormData.Postcontent.titel;
+export const Postcontent = (state) => state.counter.FormData.Postcontent.content;
+export const submitTrigger = (state) => state.counter.FormData.submitTrigger;
