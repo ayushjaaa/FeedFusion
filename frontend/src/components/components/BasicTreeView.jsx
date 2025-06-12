@@ -29,7 +29,7 @@ const BasicTreeView = () => {
   const shouldSubmit = useSelector(submitTrigger);
   // console.log(d)
  
-  useEffect(() => {  
+  useEffect(() => {   
     setLoading(true);
     dispatch(fetchInterests({ url: "/commanroutes/fetchintrest", Token }))
       .unwrap()
