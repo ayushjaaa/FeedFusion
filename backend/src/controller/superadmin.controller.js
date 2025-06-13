@@ -168,6 +168,9 @@ try{
       path: "createdBy",
       select: "username email role",
      
+    }).populate({
+      path:"interests",
+      select: "name"
     })
 console.log(post)
 

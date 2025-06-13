@@ -9,7 +9,7 @@ const navigate = useNavigate()
     <div>
   <Box sx={{gap:"1rem"}}>
   <Flexbetween sx={{gap:"2rem"}}>
-     <Button variant="contained"   color={color} onClick={()=>console.log('add post')}>
+     <Button  variant="contained"   color={color} onClick={()=>navigate('/postform')}>
         {text}
       </Button>
       {role === "admin"? <Button variant='contained' color={color} onClick={()=>navigate('/app/addpost')} >creat intrest</Button>:null}

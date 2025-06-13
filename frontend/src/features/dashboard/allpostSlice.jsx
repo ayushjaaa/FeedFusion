@@ -62,7 +62,9 @@ export const intialPostSlice = createSlice({
       .addCase(allpostgata.fulfilled, (state, action) => {
         console.log(action.payload);
         state.loading = false;
-        state.role = action.payload.role;
+        state.posts = action.payload;
       });
   },
 });
+
+export default intialPostSlice.reducer

@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { intrestchange,addintrest } from "../../features/Postform/PostFormSlice";
 import {fetchInterests,selectAllInterests,selectFetchStatus,selectContent} from '../../features/intrestbysuperadmin/Intrestbysuperadmin'
 import { useTheme } from "@emotion/react";
-
+import { ToastContainer, toast } from 'react-toastify'
 
 import { useSelector } from "react-redux";
 import {submitPost} from '../../features/Postform/PostFormSlice'
@@ -27,6 +27,7 @@ const BasicTreeView = () => {
   const [loading, setLoading] = useState(false);
   const theme = useTheme();
   const shouldSubmit = useSelector(submitTrigger);
+  const Navigate = useNavigate()
   // console.log(d)
  
   useEffect(() => {   
@@ -45,7 +46,16 @@ const BasicTreeView = () => {
   useEffect(() => {
     if (shouldSubmit) {
       console.log("data jane ke liye ready")
-      dispatch(submitPost({ url: "/superadmin/createpost", Token, Postcontent }));
+      dispatch(submitPost({ url: "/superadmin/createpost", Token, Postcontent })).unwrap().then((result)=>{
+        toast.success("post created successfully")
+        Navigate("/app/admin-dashboard")
+      }).catch((error)=>{
+        if(error){
+  toast.error("plz login");
+          Navigate("/login")
+          
+        }
+      })
     }
   }, [shouldSubmit]);
   
@@ -175,6 +185,7 @@ const BasicTreeView = () => {
   
 dispatch(addintrest(path))
 dispatch(triggerSubmit())
+
                   // dispatch(submitPost({url:"/superadmin/createpost",Token,Postcontent})) // optional if you want to submit post now
                 }}
               >
