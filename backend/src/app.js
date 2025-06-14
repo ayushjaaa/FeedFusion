@@ -34,6 +34,7 @@ app.use("/admin",adminRoutes)
 
 
 //coman //after auth//
+
 app.use('/commanroutes',commanroutes)
 
 export default app;
