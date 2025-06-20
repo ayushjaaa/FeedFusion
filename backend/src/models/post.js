@@ -25,7 +25,7 @@ const postSchema = new mongoose.Schema({
     }
   ],
   likeCount:{
-    type:Number,
+    type:Number, 
     default:0,
   },
   svaecount:{

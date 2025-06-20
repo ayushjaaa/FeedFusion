@@ -19,6 +19,7 @@ export const login = createAsyncThunk('auth/login',async({email,password,RoleInp
 
 
 export const register = createAsyncThunk('auth/register',async({username,email,password,RoleInput,url})=>{
+    console.log(url)
 try{
     
     const response = await axiosInstancePublic.post(url,{
