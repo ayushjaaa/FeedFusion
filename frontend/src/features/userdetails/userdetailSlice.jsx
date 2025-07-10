@@ -4,7 +4,7 @@
 import axios from 'axios'
  
  export const getuserdetails = createAsyncThunk('user/details',async({token,url},{rejectWithValue})=>{
-  console.log(token)
+ 
   try{
 const response = await axios.post("http://localhost:3000/user/getdetails",{},{
   headers: {
@@ -12,7 +12,7 @@ const response = await axios.post("http://localhost:3000/user/getdetails",{},{
     Authorization: `Bearer ${token}`,
   },
 })
-console.log(response)
+
   }catch(error){
     console.log(error)
   }
@@ -30,7 +30,7 @@ export const userdetailsSlice = createSlice({
       state.lodrding = true
     })
   .addCase(getuserdetails.fulfilled,(state,action)=>{
-    console.log(action.payload) 
+    // console.log(action.payload) 
   })
   }
 })

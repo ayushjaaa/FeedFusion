@@ -55,8 +55,8 @@ updatePostField:(state,action)=>{
      },
 addintrest:(state,action)=>{
    const incoming =  action.payload;
-   const current = state.Postcontent.interests;
-   const unique = incoming.filter((item)=>!current.includes(item))
+   const currentItemIds = state.Postcontent.interests.map(item => item.id);
+   const unique = incoming.filter((item)=>!currentItemIds.includes(item.id))
    state.Postcontent.interests.push(...unique);
 },
 triggerSubmit: (state) => {

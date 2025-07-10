@@ -161,9 +161,16 @@ catch(error){
 
 
 export const allpost = async(req,res) =>{
+
 try{
-  
-    const post = await postModel.find({})
+  // console.log("req.params.skip",req.query.skip)
+  const skip = parseInt(req.query.skip)
+const limit = parseInt(req.query.limit)
+
+// const limit = 10;
+// const skip = limit * 2;
+// console.log(skip,req.query.limit)
+    const post = await postModel.find({}).sort({ createdAt: -1 }).skip(skip).limit(limit)
     .populate({
       path: "createdBy",
       select: "username email role",
@@ -172,7 +179,7 @@ try{
       path:"interests",
       select: "name"
     })
-console.log(post)
+    console.log(post)
 
 if(!post){
     return res.status(403).json({message:'no post'})

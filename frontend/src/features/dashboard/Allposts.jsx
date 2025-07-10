@@ -119,7 +119,7 @@
 //        <CardActions>
 //        <Button onClick={()=>setexpanded(!expanded)} startIcon={<CalendarMonthIcon />} variant="outlined" size="small">
 //        {expanded?"Hide":"Show"} Monthly Stats
-          
+
 //         </Button>
 //        </CardActions>
 
@@ -164,7 +164,7 @@
 //   const RoleInput = role
 //   useEffect(() => {
 //     if (!Token || !RoleInput) return;
-  
+
 //     dispatch(allpostgata({ RoleInput, Token, url: "/superadmin/allpost" }))
 //       .unwrap()
 //       .then((result) => {
@@ -174,10 +174,10 @@
 //       })
 //       .catch((error) => {
 //         console.error("Error:", error);
-        
+
 //       });
 //   }, [Token, RoleInput]);
-  
+
 //   return (
 //     <div>
 //   <Box sx={{ p: 4 }}>
@@ -388,7 +388,7 @@
 
 
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { allpostgata } from './allpostSlice';
 import {
@@ -424,13 +424,15 @@ const Post = ({
   likeCount,
   svaecount,
   interests = [],
+  index,
+  refList
 }) => {
   const theme = useTheme();
   const [expanded, setExpanded] = useState(false);
 
   return (
-    <Grid item xs={12} sm={6} md={4}>
-      <Card sx={{ p: 2, borderRadius: 3, backgroundColor: theme.palette.background.default }}>
+    <Grid item xs={12} sm={6} md={4} >
+      <Card ref={(el) => (refList.current[index] = el)} sx={{ p: 2, borderRadius: 3, backgroundColor: theme.palette.background.default }}>
         <CardContent>
           {/* Header */}
           <Stack direction="row" alignItems="center" spacing={1} mb={1}>
@@ -520,43 +522,92 @@ const Allposts = () => {
   const dispatch = useDispatch();
   const { role, token } = useSelector((state) => state.counter.auth);
   const [allpost, setAllpost] = useState([]);
+  const [page, setpage] = useState(0)
+  const [lording, setlording] = useState()
+  const limit = 10
+  const refList = useRef([])
 
   useEffect(() => {
-    if (!token || !role) return;
 
-    dispatch(allpostgata({ RoleInput: role, Token: token, url: "/superadmin/allpost" }))
+    const observer = new IntersectionObserver(function (entries) {
+      if (entries[0].isIntersecting) {
+        observer.unobserve(entries[0].target);
+        callApiHandler()
+      }
+    },{
+      threshold:0.5,
+      rootMargin:"-148px",
+      root:document.querySelector("scroller-elem")
+    })
+
+    if (refList.current.length > 0) {
+      const lastElement = refList.current[refList.current.length - 1]
+      observer.observe(lastElement)
+    }
+
+
+
+return()=>{
+if(refList.current.length >0){
+  // observer.unobserve(lastElement)
+}
+}
+
+  }, [allpost, refList]);
+
+  const callApiHandler = () => {
+    if (!token || !role) return;
+    setlording(true)
+    const skip = limit * page
+    dispatch(allpostgata({ RoleInput: role, Token: token, url: `/superadmin/allpost?skip=${skip}&limit=${limit}` }))
       .unwrap()
       .then((result) => {
         console.log("Fetched posts:", result);
-        setAllpost(result);
+        if (result.length > 0) {
+          setAllpost((prev) => [...prev, ...result]);
+        }
+
+        setpage((prev) => prev + 1)
+        setlording(false)
       })
       .catch((error) => {
         console.error("Error fetching posts:", error);
+        setlording(false)
       });
+  }
+
+
+  useEffect(() => {
+    callApiHandler()
   }, [token, role]);
 
   return (
-    <Box sx={{ p: 4 }}>
+    <Box >
       {/* Header */}
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={4}>
         <Typography variant="h5" fontWeight={700}>All News Posts</Typography>
-        <CustomButton text="Add More" role="admin"  />
+        <CustomButton text="Add More" role="admin" />
       </Box>
 
       {/* Posts Grid */}
-      <Grid container spacing={3}>
-        {allpost.map((post, idx) => (
-          <Post
-            key={post._id}
-            title={post.title}
-            content={post.content}
-            createdAt={post.createdAt}
-            likeCount={post.likeCount}
-            svaecount={post.svaecount}
-            interests={post.interests || []} // 🟢 Show interests as chips
-          />
-        ))}
-      </Grid>
+      <div className='overflow-auto h-180 bg-amber-400 scroller-elem'>
+        <Grid container spacing={3} sx={{ p: 4 }} >
+          {allpost.map((post, idx) => (
+            <Post
+              key={post._id}
+              title={post.title}
+              content={post.content}
+              createdAt={post.createdAt}
+              likeCount={post.likeCount}
+              svaecount={post.svaecount}
+              interests={post.interests || []} // 🟢 Show interests as chips
+              index={idx}
+              refList={refList}
+            />
+          ))}
+        </Grid>
+      </div>
+      <div>{lording && <h1>loring</h1> }</div>
     </Box>
   );
 };

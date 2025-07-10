@@ -3,7 +3,7 @@ import axios from "axios";
 import {axiosInstancePublic} from "../../services/axiosInstance";
 
 
-export const login = createAsyncThunk('auth/login',async({email,password,RoleInput,url},{rejectWithValue})=>{
+export const login = createAsyncThunk('auth/login',async({email,password,RoleInput,url},{rejectWithVlue})=>{
     try{
         const response = await axiosInstancePublic.post(url,{
             email:email,password:password,role:RoleInput
@@ -18,7 +18,7 @@ export const login = createAsyncThunk('auth/login',async({email,password,RoleInp
 })
 
 
-export const register = createAsyncThunk('auth/register',async({username,email,password,RoleInput,url})=>{
+export const register = createAsyncThunk('auth/register',async({username,email,password,RoleInput,url},thunkAPI)=>{
     console.log(url)
 try{
     
@@ -32,6 +32,7 @@ try{
 
 }catch(error){
     console.log("❌ Register Error:", error.response?.data);
+    console.log(error)
     return thunkAPI.rejectWithValue(error.response?.data?.message || "Registration failed");
 }
 })

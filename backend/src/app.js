@@ -12,10 +12,15 @@ import cors from 'cors';
 
 
 const app = express()
-app.use(cors({
-    origin: 'http://localhost:5173/',
-    credentials: true
-  }));
+app.use(
+  cors({
+    origin: 'http://localhost:5173', // 🔁 make sure this matches your frontend port
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+  })
+);
+
   
 app.use(cookieParser());
 app.use(express.json())

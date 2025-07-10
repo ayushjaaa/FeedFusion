@@ -133,7 +133,7 @@ const theme = useTheme()
         <div className="mt-4 text-center">
           <p className="text-gray-600 text-sm">
             Don't have an account?{" "}
-            <Link to="/register" className="text-blue-600 hover:underline">
+            <Link to="/register" className0="text-blue-600 hover:underline">
               Sign Up
             </Link>
           </p>

@@ -46,13 +46,13 @@ const Sidebar = ({ isSidebarOpen, setisSidebsarOpen }) => {
   const d = useSelector((state) => state.counter);
 
   const token = localStorage.getItem("token");
-  console.log(token)
+
  const  dispatch = useDispatch()
 
   useEffect(() => {
     
   dispatch(getuserdetails({token:token,url:"user/getdetails"}))
-  console.log(d)
+ 
    
   }, [token])
   
@@ -61,7 +61,7 @@ const Sidebar = ({ isSidebarOpen, setisSidebsarOpen }) => {
   const theme = useTheme();
   const [active, setActive] = useState("");
   // const {auth} = useSelector((state) => state.counter);
-  // console.log(auth);
+
   useEffect(() => {
     setActive(pathname.substring(1));
   }, [pathname]);

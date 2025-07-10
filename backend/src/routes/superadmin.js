@@ -4,7 +4,11 @@ import * as superadmincontoller from "../controller/superadmin.controller.js"
 import { authmidelware } from '../../middlewares/authmidelware.js'
 const superadminroutes = express.Router()
 import { verifyrolemiddleware } from '../../../backend/middlewares/verifyrolemidelware.js'
-superadminroutes.post('/register',userMiddleware.registeruserValigation,(req, res, next) => {
+superadminroutes.post('/register',(req,res,next)=>{
+  console.log('hit the register super ancmin')
+  next()
+
+},userMiddleware.registeruserValigation,(req, res, next) => {
     console.log("Incoming register POST hit!");
     next(); // Continue to actual handler
   },superadmincontoller.registersuperadmin)
